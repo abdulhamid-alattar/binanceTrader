@@ -1,12 +1,12 @@
 import Enums from './Enums';
-import endPointUrls from './Configs';
+import Configs from './Configs';
 
 export default class Services {
     constructor() {
-        console.log(endPointUrls.publicUrl + 'ping');
+        //console.log(endPointUrls.publicUrl + 'ping');
     }
     test() {
-        return fetch(endPointUrls.publicUrl + 'ping', {
+        return fetch(Configs.endPointUrl + 'ping', {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
