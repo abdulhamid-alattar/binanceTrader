@@ -19,8 +19,11 @@
     "preset": "jest-expo"
   },
   "dependencies": {
+    "crypto-js": "^3.1.9-1",
     "expo": "^21.0.0",
+    "long": "^3.2.0",
     "react": "16.0.0-alpha.12",
-    "react-native": "^0.48.4"
+    "react-native": "^0.48.4",
+    "validator": "^9.0.0"
   }
 }

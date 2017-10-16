@@ -3,7 +3,7 @@ const Methods = {
     'ping': {
         name: 'ping',
         version: 'v1',
-        verb: 'get',
+        verb: 'GET',
         signed: false,
         parameters: null,
         desciption: 'Test connectivity'
@@ -11,7 +11,7 @@ const Methods = {
     'time': {
         name: 'time',
         version: 'v1',
-        verb: 'get',
+        verb: 'GET',
         signed: false,
         parameters: null,
         desciption: 'Check server time'
@@ -19,7 +19,7 @@ const Methods = {
     'order_book': {
         name: 'depth',
         version: 'v1',
-        verb: 'get',
+        verb: 'GET',
         signed: false,
         parameters: {
             symbol: {
@@ -38,7 +38,7 @@ const Methods = {
     'trades_List': {
         name: 'ping',
         version: 'v1',
-        verb: 'get',
+        verb: 'GET',
         signed: false,
         parameters: {
             symbol: {
@@ -72,7 +72,7 @@ const Methods = {
     'klines': {
         name: 'klines',
         version: 'v1',
-        verb: 'get',
+        verb: 'GET',
         signed: false,
         parameters: {
             symbol: {
@@ -106,7 +106,7 @@ const Methods = {
     '24hr_ticker': {
         name: 'ticker/24hr',
         version: 'v1',
-        verb: 'get',
+        verb: 'GET',
         signed: false,
         parameters: {
             symbol: {
@@ -120,7 +120,7 @@ const Methods = {
     'allPrices_tickers': {
         name: 'ticker/allPrices',
         version: 'v1',
-        verb: 'get',
+        verb: 'GET',
         signed: false,
         parameters: null,
         desciption: 'Latest price for all symbols.'
@@ -128,7 +128,7 @@ const Methods = {
     'allBook_tickers': {
         name: 'ticker/allBookTickers',
         version: 'v1',
-        verb: 'get',
+        verb: 'GET',
         signed: false,
         parameters: null,
         desciption: 'Best price/qty on the order book for all symbols.'
@@ -136,7 +136,7 @@ const Methods = {
     'new_order': {
         name: 'order',
         version: 'v3',
-        verb: 'post',
+        verb: 'POST',
         signed: true,
         apikey: true,
         parameters: {
@@ -196,7 +196,7 @@ const Methods = {
     'test_new_order': {
         name: 'order/test',
         version: 'v3',
-        verb: 'post',
+        verb: 'POST',
         signed: true,
         apikey: true,
         parameters: {
@@ -261,7 +261,7 @@ const Methods = {
     'query_order': { 
         name: 'order', 
         version: 'v3', 
-        verb: 'get', 
+        verb: 'GET', 
         signed: true, 
         apikey: true,
         parameters: {
@@ -296,7 +296,7 @@ const Methods = {
     'cancel_order': { 
         name: 'order', 
         version: 'v3', 
-        verb: 'delete', 
+        verb: 'DELETE', 
         signed: true, 
         apikey: true,
         parameters: {
@@ -336,7 +336,7 @@ const Methods = {
     'all_orders': { 
         name: 'allOrders', 
         version: 'v3', 
-        verb: 'get', 
+        verb: 'GET', 
         signed: true, 
         apikey: true,
         parameters: {
@@ -371,7 +371,7 @@ const Methods = {
     'account_information': { 
         name: 'account', 
         version: 'v3', 
-        verb: 'get', 
+        verb: 'GET', 
         signed: true, 
         apikey: true,
         parameters: {
@@ -391,7 +391,7 @@ const Methods = {
     'account_trade_list': { 
         name: 'myTrades', 
         version: 'v3', 
-        verb: 'get', 
+        verb: 'GET', 
         signed: true,
         apikey: true,
         parameters: {
@@ -426,7 +426,7 @@ const Methods = {
     'user_data_stream': { 
         name: 'userDataStream', 
         version: 'v1', 
-        verb: 'post', 
+        verb: 'POST', 
         signed: false,
         apikey: true,
         parameters: null,
@@ -435,7 +435,7 @@ const Methods = {
     'ka_user_data_stream': { 
         name: 'userDataStream', 
         version: 'v1', 
-        verb: 'put', 
+        verb: 'PUT', 
         signed: false,
         apikey: true,
         parameters: {
@@ -450,7 +450,7 @@ const Methods = {
     'close_user_data_stream': { 
         name: 'userDataStream', 
         version: 'v1', 
-        verb: 'delete', 
+        verb: 'DELETE', 
         signed: false,
         apikey: true,
         parameters: {
