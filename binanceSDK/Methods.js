@@ -138,6 +138,7 @@ const Methods = {
         version: 'v3',
         verb: 'post',
         signed: true,
+        apikey: true,
         parameters: {
             symbol: {
                 isMandatory: true,
@@ -197,6 +198,7 @@ const Methods = {
         version: 'v3',
         verb: 'post',
         signed: true,
+        apikey: true,
         parameters: {
             symbol: {
                 isMandatory: true,
@@ -261,6 +263,7 @@ const Methods = {
         version: 'v3', 
         verb: 'get', 
         signed: true, 
+        apikey: true,
         parameters: {
             symbol: {
                 isMandatory: true,
@@ -295,6 +298,7 @@ const Methods = {
         version: 'v3', 
         verb: 'delete', 
         signed: true, 
+        apikey: true,
         parameters: {
             symbol: {
                 isMandatory: true,
@@ -329,7 +333,136 @@ const Methods = {
         },
         desciption: 'Cancel an active order.' 
     },
-}
+    'all_orders': { 
+        name: 'allOrders', 
+        version: 'v3', 
+        verb: 'get', 
+        signed: true, 
+        apikey: true,
+        parameters: {
+            symbol: {
+                isMandatory: true,
+                type: 'LONG',
+                desciption: null
+            },
+            orderId: {
+                isMandatory: false,
+                type: 'LONG',
+                desciption: null
+            },
+            limit: {
+                isMandatory: false,
+                type: 'INT',
+                desciption: 'Default 500; max 500.'
+            },
+            recvWindow: {
+                isMandatory: false,
+                type: 'LONG',
+                desciption: null
+            },
+            timestamp: {
+                isMandatory: true,
+                type: 'LONG',
+                desciption: null
+            }
+        },
+        desciption: 'Get all account orders; active, canceled, or filled.If orderId is set, it will get orders >= that orderId. Otherwise most recent orders are returned.' 
+    },
+    'account_information': { 
+        name: 'account', 
+        version: 'v3', 
+        verb: 'get', 
+        signed: true, 
+        apikey: true,
+        parameters: {
+            recvWindow: {
+                isMandatory: false,
+                type: 'LONG',
+                desciption: null
+            },
+            timestamp: {
+                isMandatory: true,
+                type: 'LONG',
+                desciption: null
+            }
+        },
+        desciption: 'Get current account information.' 
+    },
+    'account_trade_list': { 
+        name: 'myTrades', 
+        version: 'v3', 
+        verb: 'get', 
+        signed: true,
+        apikey: true,
+        parameters: {
+            symbol: {
+                isMandatory: true,
+                type: 'STRING',
+                desciption: null
+            },
+            fromId: {
+                isMandatory: false,
+                type: 'LONG',
+                desciption: 'TradeId to fetch from. Default gets most recent trades.'
+            },
+            limit: {
+                isMandatory: false,
+                type: 'INT',
+                desciption: 'Default 500; max 500.'
+            },
+            recvWindow: {
+                isMandatory: false,
+                type: 'LONG',
+                desciption: null
+            },
+            timestamp: {
+                isMandatory: true,
+                type: 'LONG',
+                desciption: null
+            }
+        },
+        desciption: 'Get trades for a specific account and symbol.' 
+    },
+    'user_data_stream': { 
+        name: 'userDataStream', 
+        version: 'v1', 
+        verb: 'post', 
+        signed: false,
+        apikey: true,
+        parameters: null,
+        desciption: 'Start a new user data stream.' 
+    },
+    'ka_user_data_stream': { 
+        name: 'userDataStream', 
+        version: 'v1', 
+        verb: 'put', 
+        signed: false,
+        apikey: true,
+        parameters: {
+            listenKey: {
+                isMandatory: true,
+                type: 'STRING',
+                desciption: null
+            }
+        },
+        desciption: 'PING a user data stream to prevent a time out.' 
+    },
+    'close_user_data_stream': { 
+        name: 'userDataStream', 
+        version: 'v1', 
+        verb: 'delete', 
+        signed: false,
+        apikey: true,
+        parameters: {
+            listenKey: {
+                isMandatory: true,
+                type: 'STRING',
+                desciption: null
+            }
+        },
+        desciption: 'Close out a user data stream.' 
+    },
+};
 
 
 module.exports = endPointUrls;
