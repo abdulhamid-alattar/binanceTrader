@@ -2,7 +2,7 @@ import Enums from './Enums';
 import Methods from './Methods';
 import Validator from './MethodValidator';
 import Configs from './Configs';
-var SHA256 = require("crypto-js/hmac-sha256");
+var CryptoJS = require("crypto-js");
 
 export default class Services {
     constructor() {
@@ -13,14 +13,16 @@ export default class Services {
 
 
         Object.keys(args).forEach(function (key) {
-            payload += '&' + key + '=' + args[key];
+            payload +=  key + '=' + args[key] + '&';
         });
 
         if (method.signed) {
-            payload += '&signature=' + SHA256(payload, Configs.secretKey);
+            payload += 'signature=' + CryptoJS.HmacSHA256(payload.replace(/\&$/, ''), Configs.secretKey);
         }
 
-        return payload;
+        
+
+        return '?' + payload;
     }
 
     constructEndPoint(args, method) {
@@ -35,21 +37,20 @@ export default class Services {
 
     constructRestCall(args, method) {
 
-        var reqHeaders = new Headers();
-        reqHeaders.append("Content-Type", "application/json");
-        reqHeaders.append("Accept", "application/json");
+        var reqHeaders = {
+          //  "Content-Type": "application/json",
+          //  "Accept": "application/json"
+        }
+
 
         if (method.apikey) {
-            reqHeaders.append("X-MBX-APIKEY", Configs.APIKey);
+            reqHeaders["X-MBX-APIKEY"] = Configs.APIKey;
         }
 
         let restObj = {
-            method: 'POST',
+            method: method.verb,
             headers: reqHeaders
         };
-        if (method.verb === 'GET' && !method.signed) {
-            restObj.method = 'GET';
-        }
 
 
         if (method.verb === 'POST' || method.verb === 'PUT' || method.verb === 'DELETE') {
@@ -82,8 +83,37 @@ export default class Services {
 
     }
 
+    accountInfo(args) {
+        const _accountInfo = Methods.account_information;
+        if(typeof args ==='undefined'){
+            args = {};
+        }
+        args.timestamp = new Date().getTime();
+        args.recvWindow = '6000000';
+
+       // console.log('valid');
+        console.log(this.constructEndPoint(args, _accountInfo));
+       // console.log(this.constructRestCall(args, _accountInfo));
+        if (Validator(args, _accountInfo.parameters)) {
+
+            return fetch(
+                this.constructEndPoint(args, _accountInfo),
+                this.constructRestCall(args, _accountInfo)
+            )
+            .then((response) => response.json())
+                .then((responseJson) => {
+                    return responseJson;
+
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        }
+
+    }
+
     newOrder(args) {
-        const _newOrder = Methods['new_order'];
+        const _newOrder = Methods.new_order;
         if (Validator(args, _newOrder.parameters)) {
 
             return fetch(
