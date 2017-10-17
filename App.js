@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet,ListView, Text, View,ActivityIndicator } from 'react-native';
 import Services from './binanceSDK/Services';
 
 
@@ -14,7 +14,8 @@ export default class App extends React.Component {
     
   }
   componentDidMount() {
-    this.testConnectivity();
+   // this.testConnectivity();
+    this.loadAccountInfo();
   }
 
   testConnectivity() {
@@ -44,13 +45,41 @@ export default class App extends React.Component {
       });
   }
 
+  loadAccountInfo() {
+    let services = new Services();
+    let accountInfo = services.accountInfo();
+
+    accountInfo.then((responseJson) => {
+    
+        if (responseJson) {
+          let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+          this.setState({
+            isLoading: false,
+            dataSource: ds.cloneWithRows(responseJson.balances),
+          }, function () {
+            // do something with new state
+          });
+        } else {
+          this.setState({
+            isLoading: true
+          }, function () {
+            // do something with new state
+          });
+        }
+
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
 
   render() {
 
     if (this.state.isLoading) {
       return (
         <View style={styles.container}>
-          <Text> Loading...</Text>
+          <ActivityIndicator />
         </View>
       );
     }
@@ -58,6 +87,10 @@ export default class App extends React.Component {
     return (
       <View style={styles.container}>
         <Text> testing </Text>
+        <ListView
+          dataSource={this.state.dataSource}
+          renderRow={(rowData) => <Text>{rowData.asset}, {rowData.free}</Text>}
+        />
       </View>
     );
   }
@@ -66,8 +99,6 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+    marginTop: 20,
+  }
 });
