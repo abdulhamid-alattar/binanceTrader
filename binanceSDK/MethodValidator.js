@@ -21,11 +21,11 @@ const validateEnum = function (obj) {
 module.exports = function (args, parameters) {
 
     let errorMessage = '';
-
+    let isValid = true;
     Object.keys(args).forEach(function (key) {
         const val = args[key];
         const parameterOptions = parameters[key];
-        let isValid = true;
+        
 
         if (parameterOptions) {
             if (parameterOptions.isMandatory && !val) {

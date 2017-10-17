@@ -465,4 +465,4 @@ const Methods = {
 };
 
 
-module.exports = endPointUrls;
+module.exports = Methods;
