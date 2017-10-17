@@ -65,19 +65,19 @@ module.exports = function (args, parameters) {
 
             }
 
-            if (parameterOptions.type && parameterOptions.type === 'LONG') {
+         /*   if (parameterOptions.type && parameterOptions.type === 'LONG') {
 
-                if (!Long.isLong(val)) {
+                if (!Long.isLong(val+'')) {
                     isValid = false;
                     errorMessage = 'Value is not long:' + key + '/' + val;
                     return;
                 }
 
-            }
+            }*/
 
-            if (parameterOptions.type && parameterOptions.type === 'INT') {
+            if (parameterOptions.type && parameterOptions.type === 'INT' || parameterOptions.type === 'LONG') {
 
-                if (!validator.isInt(val)) {
+                if (!validator.isInt(val+'')) {
                     isValid = false;
                     errorMessage = 'Value is not int:' + key + '/' + val;
                     return;
