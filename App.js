@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet,ListView, Text, View,ActivityIndicator } from 'react-native';
-import Services from './binanceSDK/Services';
+import Services from 'binancesdk';
+import Configs from './configs/Configs';
 
 
 
@@ -19,7 +20,8 @@ export default class App extends React.Component {
   }
 
   testConnectivity() {
-    let services = new Services();
+    
+    let services = new Services(Configs);
     let test = services.test();
 
     test.then((responseJson) => {
