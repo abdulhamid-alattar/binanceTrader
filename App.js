@@ -1,75 +1,135 @@
 import React from 'react';
-import { StyleSheet,ListView, Text, View,ActivityIndicator } from 'react-native';
+import { StyleSheet, ListView, Text, View, ActivityIndicator } from 'react-native';
 import Services from 'binancesdk';
-import Configs from './configs/Configs';
+let Configs = require('./configs/Configs');
 
 
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
+    this.services = new Services(Configs);
     this.state = {
       isLoading: true
     }
 
-    
+
   }
   componentDidMount() {
-   // this.testConnectivity();
-    this.loadAccountInfo();
+    // this.testConnectivity();
+    this.allBookTickers();
   }
 
   testConnectivity() {
-    
-    let services = new Services(Configs);
-    let test = services.test();
+
+ 
+    let test = this.services.test();
 
     test.then((responseJson) => {
-    
-        if (responseJson) {
-          this.setState({
-            isLoading: false,
-            dataSource: responseJson,
-          }, function () {
-            // do something with new state
-          });
-        } else {
-          this.setState({
-            isLoading: true
-          }, function () {
-            // do something with new state
-          });
-        }
 
-      })
+      if (responseJson) {
+        this.setState({
+          isLoading: false,
+          dataSource: responseJson,
+        }, function () {
+          // do something with new state
+        });
+      } else {
+        this.setState({
+          isLoading: true
+        }, function () {
+          // do something with new state
+        });
+      }
+
+    })
       .catch((error) => {
         console.error(error);
       });
   }
 
   loadAccountInfo() {
-    let services = new Services();
-    let accountInfo = services.accountInfo();
+    
+    let accountInfo = this.services.accountInfo();
 
     accountInfo.then((responseJson) => {
-    
-        if (responseJson) {
-          let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-          this.setState({
-            isLoading: false,
-            dataSource: ds.cloneWithRows(responseJson.balances),
-          }, function () {
-            // do something with new state
-          });
-        } else {
-          this.setState({
-            isLoading: true
-          }, function () {
-            // do something with new state
-          });
-        }
 
-      })
+      if (responseJson) {
+        let ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+        this.setState({
+          isLoading: false,
+          dataSource: ds.cloneWithRows(responseJson.balances),
+        }, function () {
+          // do something with new state
+        });
+      } else {
+        this.setState({
+          isLoading: true
+        }, function () {
+          // do something with new state
+        });
+      }
+
+    })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+  allPricesTickers() {
+    
+    let accountInfo = this.services.allPricesTickers();
+
+    accountInfo.then((responseJson) => {
+
+      if (responseJson) {
+        console.log(responseJson)
+        let ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+        this.setState({
+          isLoading: false,
+          dataSource: ds.cloneWithRows(responseJson),
+        }, function () {
+          // do something with new state
+        });
+      } else {
+        this.setState({
+          isLoading: true
+        }, function () {
+          // do something with new state
+        });
+      }
+
+    })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+
+  allBookTickers() {
+    
+    let accountInfo = this.services.allBookTickers();
+
+    accountInfo.then((responseJson) => {
+
+      if (responseJson) {
+        console.log(responseJson)
+        let ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+        this.setState({
+          isLoading: false,
+          dataSource: ds.cloneWithRows(responseJson),
+        }, function () {
+          // do something with new state
+        });
+      } else {
+        this.setState({
+          isLoading: true
+        }, function () {
+          // do something with new state
+        });
+      }
+
+    })
       .catch((error) => {
         console.error(error);
       });
@@ -91,7 +151,7 @@ export default class App extends React.Component {
         <Text> testing </Text>
         <ListView
           dataSource={this.state.dataSource}
-          renderRow={(rowData) => <Text>{rowData.asset}, {rowData.free}</Text>}
+          renderRow={(rowData) => <Text>{rowData.symbol}, {rowData.askPrice}</Text>}
         />
       </View>
     );
